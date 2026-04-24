@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Reporte oficial de cierre vial por derrumbe en la vía El Tarra – Tibú, Norte de Santander." />
+  <title>Reporte Vial | Municipio El Tarra – Norte de Santander</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+    :root {
+      --rojo:      #c0392b;
+      --rojo-dark: #922b21;
+      --amarillo:  #f39c12;
+      --verde:     #1e8449;
+      --gris-bg:   #f4f6f7;
+      --gris-brd:  #d5d8dc;
+      --txt:       #1a1a1a;
+      --txt-dim:   #555;
+      --blanco:    #ffffff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'IBM Plex Sans', sans-serif;
+      background: var(--gris-bg);
+      color: var(--txt);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    /* ── BANDA DE EMERGENCIA ── */
+    .banda-emergencia {
+      background: var(--rojo);
+      color: #fff;
+      text-align: center;
+      padding: 10px 16px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 1px;
+      animation: parpadeo 1.5s ease-in-out infinite;
+    }
+    @keyframes parpadeo {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: .75; }
+    }
+
+    /* ── CABECERA INSTITUCIONAL ── */
+    .cabecera {
+      background: #1a2a3a;
+      padding: 0;
+      border-bottom: 4px solid var(--rojo);
+    }
+    .cab-top {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 24px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .cab-escudo {
+      font-size: 44px;
+      line-height: 1;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,.4));
+    }
+    .cab-textos { flex: 1; }
+    .cab-entidad {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: #7fb3d3;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+    .cab-nombre {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+    }
+    .cab-dep {
+      font-size: 13px;
+      color: #aab7c4;
+      margin-top: 2px;
+    }
+    .cab-fecha {
+      text-align: right;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      color: #7fb3d3;
+      line-height: 1.6;
+    }
+
+    /* ── BARRA DE NAVEGACIÓN ── */
+    .nav-bar {
+      background: #243447;
+      padding: 0 24px;
+      border-bottom: 1px solid #344a5e;
+    }
+    .nav-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      gap: 0;
+    }
+    .nav-item {
+      color: #aab7c4;
+      font-size: 13px;
+      padding: 10px 16px;
+      border-bottom: 3px solid transparent;
+      text-decoration: none;
+      transition: color .2s, border-color .2s;
+    }
+    .nav-item:hover { color: #fff; }
+    .nav-item.activo {
+      color: #fff;
+      border-bottom-color: var(--rojo);
+      font-weight: 600;
+    }
+
+    /* ── CONTENEDOR ── */
+    .contenedor {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px 16px 60px;
+    }
+
+    /* ── BREADCRUMB ── */
+    .breadcrumb {
+      font-size: 12px;
+      color: var(--txt-dim);
+      margin-bottom: 20px;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    .breadcrumb a { color: #2471a3; text-decoration: none; }
+    .breadcrumb span { margin: 0 6px; }
+
+    /* ── TARJETA DE ALERTA PRINCIPAL ── */
+    .alerta-principal {
+      background: var(--blanco);
+      border: 2px solid var(--rojo);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 20px rgba(192,57,43,.15);
+    }
+    .alerta-header {
+      background: var(--rojo);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .alerta-badge {
+      background: rgba(255,255,255,.2);
+      border: 1px solid rgba(255,255,255,.4);
+      border-radius: 4px;
+      padding: 3px 10px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 1px;
+    }
+    .alerta-tipo {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      flex: 1;
+    }
+    .alerta-nivel {
+      background: #fff;
+      color: var(--rojo);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 4px;
+      letter-spacing: .5px;
+    }
+
+    .alerta-body { padding: 20px; }
+
+    .alerta-titulo {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--rojo-dark);
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+
+    .alerta-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--gris-brd);
+    }
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .meta-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--txt-dim);
+    }
+    .meta-valor {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--txt);
+    }
+    .meta-valor.rojo { color: var(--rojo); }
+    .meta-valor.verde { color: var(--verde); }
+
+    .alerta-desc {
+      font-size: 15px;
+      line-height: 1.75;
+      color: #2c3e50;
+      margin-bottom: 16px;
+    }
+
+    /* ── CAJA DE DETALLES TÉCNICOS ── */
+    .detalles-box {
+      background: #fdfefe;
+      border: 1px solid var(--gris-brd);
+      border-left: 4px solid var(--rojo);
+      border-radius: 4px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .detalles-titulo {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--txt-dim);
+      margin-bottom: 10px;
+    }
+    .detalles-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .detalle-fila {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .detalle-key {
+      font-size: 11px;
+      color: var(--txt-dim);
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    .detalle-val {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    /* ── RECOMENDACIONES ── */
+    .recomendaciones {
+      background: #fef9e7;
+      border: 1px solid #f39c12;
+      border-radius: 6px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+    }
+    .rec-titulo {
+      font-size: 14px;
+      font-weight: 700;
+      color: #7d6608;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .rec-lista { padding-left: 20px; }
+    .rec-lista li {
+      font-size: 14px;
+      color: #7d6608;
+      margin-bottom: 6px;
+      line-height: 1.5;
+    }
+
+    /* ── HISTORIAL DE ACTUALIZACIONES ── */
+    .historial {
+      background: var(--blanco);
+      border: 1px solid var(--gris-brd);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .historial-header {
+      background: #2c3e50;
+      padding: 10px 16px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      color: #aab7c4;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .historial-item {
+      display: flex;
+      gap: 16px;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--gris-brd);
+      align-items: flex-start;
+    }
+    .historial-item:last-child { border-bottom: none; }
+    .hist-hora {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      color: var(--txt-dim);
+      white-space: nowrap;
+      min-width: 100px;
+    }
+    .hist-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+    .dot-rojo    { background: var(--rojo); }
+    .dot-naranja { background: var(--amarillo); }
+    .dot-verde   { background: var(--verde); }
+    .hist-texto { font-size: 14px; line-height: 1.5; }
+
+    /* ── ALERTA SAT ── */
+    .aviso-sat {
+      background: #eaf4fb;
+      border: 1px solid #2e86c1;
+      border-radius: 6px;
+      padding: 14px 18px;
+      margin-bottom: 24px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .aviso-sat-icono { font-size: 24px; flex-shrink: 0; }
+    .aviso-sat-texto { font-size: 14px; color: #1a5276; line-height: 1.6; }
+    .aviso-sat-texto strong { display: block; margin-bottom: 4px; font-size: 15px; }
+
+    /* ── PIE ── */
+    .pie {
+      background: #1a2a3a;
+      padding: 20px 24px;
+      margin-top: 40px;
+    }
+    .pie-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .pie-texto {
+      font-size: 12px;
+      color: #7fb3d3;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    .pie-escudo { font-size: 24px; }
+
+    /* ── ID REPORTE ── */
+    .id-reporte {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      background: #eaecee;
+      border: 1px solid var(--gris-brd);
+      border-radius: 4px;
+      padding: 6px 12px;
+      color: var(--txt-dim);
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 600px) {
+      .cab-top { flex-wrap: wrap; }
+      .cab-fecha { text-align: left; }
+      .detalles-grid { grid-template-columns: 1fr; }
+      .pie-inner { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- BANDA DE EMERGENCIA -->
+<div class="banda-emergencia">
+  🔴 ALERTA ACTIVA – CIERRE VIAL POR DERRUMBE – VÍA EL TARRA · NORTE DE SANTANDER
+</div>
+
+<!-- CABECERA INSTITUCIONAL -->
+<header class="cabecera">
+  <div class="cab-top">
+    <div class="cab-escudo">🏛️</div>
+    <div class="cab-textos">
+      <div class="cab-entidad">República de Colombia · Gobernación</div>
+      <div class="cab-nombre">Alcaldía Municipal de El Tarra</div>
+      <div class="cab-dep">Norte de Santander · Subregión del Catatumbo</div>
+    </div>
+    <div class="cab-fecha">
+      <div>Jueves, 23 de abril de 2026</div>
+      <div id="hora-actual">Cargando hora...</div>
+      <div style="color:#c0392b;font-weight:700;">⚠ REPORTE URGENTE</div>
+    </div>
+  </div>
+  <nav class="nav-bar">
+    <div class="nav-inner">
+      <a href="#" class="nav-item">Inicio</a>
+      <a href="#" class="nav-item activo">Alertas Viales</a>
+      <a href="#" class="nav-item">Noticias</a>
+      <a href="#" class="nav-item">Contacto</a>
+    </div>
+  </nav>
+</header>
+
+<!-- CONTENIDO PRINCIPAL -->
+<main class="contenedor">
+
+  <div class="breadcrumb">
+    <a href="#">Inicio</a>
+    <span>›</span>
+    <a href="#">Alertas Viales</a>
+    <span>›</span>
+    Derrumbe vía El Tarra – Tibú
+  </div>
+
+  <div class="id-reporte">
+    REPORTE-ID: ALT-2026-04-23-007 &nbsp;|&nbsp; FUENTE: Alcaldía El Tarra &nbsp;|&nbsp; ESTADO: ACTIVO
+  </div>
+
+  <!-- TARJETA PRINCIPAL -->
+  <div class="alerta-principal">
+    <div class="alerta-header">
+      <span class="alerta-badge">URGENTE</span>
+      <span class="alerta-tipo">Cierre Vial – Derrumbe / Deslizamiento</span>
+      <span class="alerta-nivel">NIVEL ROJO</span>
+    </div>
+    <div class="alerta-body">
+
+      <h1 class="alerta-titulo">
+        Derrumbe bloquea completamente la vía El Tarra – Tibú en el km 31.
+        Cierre vial total. Orden público comprometido en zona de emergencia.
+      </h1>
+
+      <div class="alerta-meta">
+        <div class="meta-item">
+          <span class="meta-label">Fecha del evento</span>
+          <span class="meta-valor">23 de abril de 2026</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Hora del reporte</span>
+          <span class="meta-valor">14:35 COT</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Estado de la vía</span>
+          <span class="meta-valor rojo">CERRADA – Paso restringido</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Tiempo estimado apertura</span>
+          <span class="meta-valor">6 a 8 horas</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Zona afectada</span>
+          <span class="meta-valor">El Tarra – Tibú · km 31</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Entidad reportante</span>
+          <span class="meta-valor">Alcaldía El Tarra + INVÍAS</span>
+        </div>
+      </div>
+
+      <p class="alerta-desc">
+        A las 14:35 horas del 23 de abril de 2026 se registró un <strong>derrumbe de grandes proporciones</strong>
+        en el kilómetro 31 de la vía que conecta el municipio de <strong>El Tarra con Tibú</strong>, 
+        Norte de Santander. El deslizamiento de tierra generó un <strong>bloqueo vial total</strong> 
+        que impide el paso vehicular en ambos sentidos. El material deslizado cubre aproximadamente 
+        80 metros de la calzada con una altura de 3 a 4 metros de escombros y lodo.
+      </p>
+
+      <p class="alerta-desc">
+        Personal de <strong>INVÍAS Norte de Santander</strong> y de la <strong>Alcaldía de El Tarra</strong>
+        se desplazaron al lugar para evaluar la magnitud del derrumbe e iniciar labores de remoción.
+        Se presentan además <strong>situaciones de orden público</strong> en la zona que dificultan
+        el acceso de la maquinaria. La <strong>Policía Nacional</strong> mantiene presencia en el sector
+        para garantizar la seguridad de los operarios y de los vehículos represados.
+      </p>
+
+      <div class="detalles-box">
+        <div class="detalles-titulo">📋 Detalles técnicos del incidente</div>
+        <div class="detalles-grid">
+          <div class="detalle-fila">
+            <span class="detalle-key">Tipo de evento</span>
+            <span class="detalle-val">Derrumbe / Deslizamiento de tierra</span>
+          </div>
+          <div class="detalle-fila">
+            <span class="detalle-key">Causa probable</span>
+            <span class="detalle-val">Saturación del suelo por lluvias intensas</span>
+          </div>
+          <div class="detalle-fila">
+            <span class="detalle-key">Longitud bloqueada</span>
+            <span class="detalle-val">~80 metros de calzada</span>
+          </div>
+          <div class="detalle-fila">
+            <span class="detalle-key">Maquinaria asignada</span>
+            <span class="detalle-val">2 retroexcavadoras INVÍAS</span>
+          </div>
+          <div class="detalle-fila">
+            <span class="detalle-key">Rutas alternas</span>
+            <span class="detalle-val">No disponibles – consultar autoridades</span>
+          </div>
+          <div class="detalle-fila">
+            <span class="detalle-key">Afectación</span>
+            <span class="detalle-val">Vehículos particulares y de carga</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="recomendaciones">
+        <div class="rec-titulo">⚠️ Recomendaciones a la comunidad</div>
+        <ul class="rec-lista">
+          <li>Evite transitar por la vía El Tarra – Tibú hasta nuevo aviso de apertura.</li>
+          <li>No ingrese a la zona del derrumbe — riesgo de nuevos deslizamientos por lluvias.</li>
+          <li>Consulte el estado del cierre vial antes de emprender cualquier viaje.</li>
+          <li>Informe a familiares y conductores sobre el bloqueo activo en el km 31.</li>
+          <li>En caso de emergencia médica en la zona, contactar a la línea 123.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- AVISO SAT -->
+  <div class="aviso-sat">
+    <div class="aviso-sat-icono">🛡️</div>
+    <div class="aviso-sat-texto">
+      <strong>Esta alerta es monitoreada por el SAT El Tarra</strong>
+      El Sistema de Alerta Temprana del municipio de El Tarra extrae y centraliza automáticamente
+      reportes como este desde fuentes oficiales, para que los habitantes puedan consultarlos
+      desde cualquier dispositivo móvil con conexión 2G/3G.
+      Consulte las alertas activas en: <strong>https://web-production-19a74.up.railway.app</strong>
+    </div>
+  </div>
+
+  <!-- HISTORIAL DE ACTUALIZACIONES -->
+  <div class="historial">
+    <div class="historial-header">📡 Historial de actualizaciones – Reporte ALT-2026-04-23-007</div>
+    <div class="historial-item">
+      <span class="hist-hora">14:35 COT</span>
+      <span class="hist-dot dot-rojo"></span>
+      <span class="hist-texto"><strong>ALERTA INICIAL:</strong> Se reporta derrumbe en km 31 vía El Tarra–Tibú. Bloqueo total confirmado. Cierre vial inmediato por orden público y emergencia ambiental.</span>
+    </div>
+    <div class="historial-item">
+      <span class="hist-hora">15:10 COT</span>
+      <span class="hist-dot dot-naranja"></span>
+      <span class="hist-texto"><strong>ACTUALIZACIÓN:</strong> Personal de INVÍAS en camino con maquinaria. Paro en la zona dificulta acceso. Contingencia activa. Se estima apertura en 6 a 8 horas.</span>
+    </div>
+    <div class="historial-item">
+      <span class="hist-hora">16:00 COT</span>
+      <span class="hist-dot dot-naranja"></span>
+      <span class="hist-texto"><strong>ACTUALIZACIÓN:</strong> Retroexcavadoras en el sitio. Inicio de remoción de escombros. El retén policial garantiza seguridad del personal. Vía continúa cerrada.</span>
+    </div>
+    <div class="historial-item">
+      <span class="hist-hora">Pendiente</span>
+      <span class="hist-dot dot-verde"></span>
+      <span class="hist-texto" style="color:#888;font-style:italic;">Apertura parcial o total – A confirmar por INVÍAS y Alcaldía Municipal.</span>
+    </div>
+  </div>
+
+</main>
+
+<!-- PIE -->
+<footer class="pie">
+  <div class="pie-inner">
+    <span class="pie-escudo">🏛️</span>
+    <span class="pie-texto">Alcaldía Municipal de El Tarra · Norte de Santander · Colombia · 2026</span>
+    <span class="pie-texto">Reporte oficial de cierre vial por derrumbe · ALT-2026-04-23-007</span>
+  </div>
+</footer>
+
+<script>
+  // Mostrar hora actual en tiempo real
+  function actualizarHora() {
+    const ahora = new Date();
+    const opciones = { hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'America/Bogota' };
+    document.getElementById('hora-actual').textContent =
+      ahora.toLocaleTimeString('es-CO', opciones) + ' COT';
+  }
+  actualizarHora();
+  setInterval(actualizarHora, 1000);
+</script>
+
+</body>
+</html>
